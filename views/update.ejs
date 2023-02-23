@@ -1,0 +1,22 @@
+<%- include("./partials/updateheader") -%>
+
+    <div class="main-block">
+      <div class="left-part">
+        <i class="fas fa-envelope"></i>
+        <i class="fas fa-at"></i>
+        <i class="fas fa-mail-bulk"></i>
+      </div>
+      <form action="/updated" method="post">
+        <h1>Update Your Form</h1>
+        <div class="info">
+          <input class="fname" type="text" name="name" placeholder="Full name" value="<%= name %>" required>
+          <input type="email" name="email" placeholder="Email" value="<%= email %>" required>
+          <input type="tel" name="phoneno" placeholder="Phone Number (e.g. 03356898569)" value="<%= phoneno %>">
+          <textarea rows="4" name="msg" placeholder="Message" ><%= msg %></textarea>
+        </div>
+        <button name="id" value="<%= id %>" type="submit">Update</button>
+      </form>
+    </div>
+
+<%- include("./partials/updatefooter") -%>
+  

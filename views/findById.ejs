@@ -1,0 +1,47 @@
+<%- include("./partials/header") -%>
+
+    <table>
+        <caption>Contact Information</caption>
+        <thead>
+          <tr class="thead">
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Message</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+
+            <form action="/update" method="post">
+              <td data-label="ID"> <%= data.id %> </td>
+              <input type="hidden" name="id" value="<%= data.id %>">
+
+              <td data-label="Name"> <%= data.name %> </td>
+              <input type="hidden" name="name" value="<%= data.name %>">
+
+              <td data-label="Email"> <%= data.email %> </td>
+              <input type="hidden" name="email" value="<%= data.email %>">
+
+              <td data-label="Phone Number"> <%= data.phoneno %> </td>
+              <input type="hidden" name="phoneno" value="<%= data.phoneno %>">
+
+              <td data-label="Message"> <%= data.msg %> </td>
+              <input type="hidden" name="msg" value="<%= data.msg %>">
+              
+            <td data-label="Update"><button type="submit">Update</button></td>
+            </form>
+
+            <form action="/delete" method="post">
+              <td data-label="Delete"><button name="id" value="<%=data.id%>" type="submit"">Delete</button></td>
+            </form>
+
+          </tr>
+        </tbody>
+      </table>
+
+<%- include("./partials/footer"); -%>
