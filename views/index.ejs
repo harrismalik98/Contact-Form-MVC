@@ -1,47 +1,28 @@
-<%- include("./partials/header") -%>
+<% data.forEach(function(customer){ %>
 
-    <table>
-        <caption>Contact Information</caption>
-        <thead>
-          <tr class="thead">
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Message</th>
-            <th scope="col">Update</th>
-            <th scope="col">Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% data.forEach(function(customer){ %>
-          <tr>
-            <form action="/update" method="post">
-              <td data-label="ID"> <%= customer.id %> </td>
-              <input type="hidden" name="id" value="<%= customer.id %>">
+  <tr>
+    <form action="/update" method="post">
+      <td data-label="ID"><%= customer.id %></td>
+      <input type="hidden" name="id" value="<%= customer.id %>">
 
-              <td data-label="Name"> <%= customer.name %> </td>
-              <input type="hidden" name="name" value="<%= customer.name %>">
+      <td data-label="Name"><%= customer.name %></td>
+      <input type="hidden" name="name" value="<%= customer.name %>">
 
-              <td data-label="Email"> <%= customer.email %> </td>
-              <input type="hidden" name="email" value="<%= customer.email %>">
+      <td data-label="Email"><%= customer.email %></td>
+      <input type="hidden" name="email" value="<%= customer.email %>">
 
-              <td data-label="Phone Number"> <%= customer.phoneno %> </td>
-              <input type="hidden" name="phoneno" value="<%= customer.phoneno %>">
+      <td data-label="Phone Number"><%= customer.phoneno %></td>
+      <input type="hidden" name="phoneno" value="<%= customer.phoneno %>">
 
-              <td data-label="Message"> <%= customer.msg %> </td>
-              <input type="hidden" name="msg" value="<%= customer.msg %>">
-              
-            <td data-label="Update"><button type="submit">Update</button></td>
-            </form>
+      <td data-label="Message"><%= customer.msg %></td>
+      <input type="hidden" name="msg" value="<%= customer.msg %>">
 
-            <form action="/delete" method="post">
-              <td data-label="Delete"><button name="id" value="<%=customer.id%>" type="submit"">Delete</button></td>
-            </form>
+      <td data-label="Update"><button type="submit">Update</button></td>
+    </form>
 
-          </tr>
-          <% }); %>
-        </tbody>
-      </table>
+    <form action="/delete" method="post">
+      <td data-label="Delete"><button name="id" value="<%=customer.id%>" type="submit"">Delete</button></td>
+    </form>
+  </tr>
 
-<%- include("./partials/footer"); -%>
+<% }); %>

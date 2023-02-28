@@ -93,7 +93,8 @@ const update_form =  async(req, res) => {
         const phoneno = req.body.phoneno;
         const msg = req.body.msg;
 
-        await res.render("update",{id:id, name:name, email:email, phoneno:phoneno, msg:msg});
+        // If we use different layout in our project than layout.ejs then we have to give a layout name like below.
+        await res.render("update",{layout:"./layouts/updatelayout", id:id, name:name, email:email, phoneno:phoneno, msg:msg});
     }
     catch(err){
         console.log(err);

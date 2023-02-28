@@ -1,0 +1,21 @@
+<%- include("../partials/header") -%>
+    <%- include("../partials/tableheader") -%>
+
+        <%- body%>
+
+    <%- include("../partials/tablefooter") -%>
+<%- include("../partials/footer"); -%>
+
+
+<!-- Partials: are typically used for small, repetitive HTML elements that are shared across multiple pages. -->
+
+<!-- Custom layouts: are EJS templates that define the overall structure of a website, including the common elements 
+that are shared across multiple pages. They are typically used for larger, more complex structures that define
+the overall layout of a website. -->
+
+<!-- In this website 2 pages index.ejs and findById.ejs have same partials. So, by writing same partials
+in both file. I just created a Custom Layout,so i don't have to write partials in both fiels.  -->
+
+<!-- Instead of defining the same partials in all 10 pages of your website, you can create a custom layout that defines 
+the common structure of your website and includes all the necessary partials. This way, you only need to define the 
+partials once in the layout, and every page that uses the layout will automatically include them. -->
