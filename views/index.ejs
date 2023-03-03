@@ -5,6 +5,8 @@
       <td data-label="ID"><%= customer.id %></td>
       <input type="hidden" name="id" value="<%= customer.id %>">
 
+      <td data-label="Image"><img src="data:<%= customer.filetype %>;base64,<%=customer.image %>" /></td>
+
       <td data-label="Name"><%= customer.name %></td>
       <input type="hidden" name="name" value="<%= customer.name %>">
 

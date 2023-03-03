@@ -12,6 +12,8 @@ const clientSchema = new mongoose.Schema({
     name: {type:String, required:true, unique:true, minLength:3},
     email: {type:String, required:true, unique:true},
     phoneno: Number,
+    image: String,
+    filetype: String,
     msg: String,
 });
 

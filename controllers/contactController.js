@@ -1,11 +1,27 @@
 const path = require("path");
+const multer = require("multer");
+const fs = require("fs");
 const Client = require("../models/contactModel");
+
+
+
+// ============================ For Storing Image File on Server ============================ //
+
+    const storage = multer.diskStorage({
+        destination: function(req, file, cb) {
+          cb(null, 'public/images/');
+        },
+        filename: function(req, file, cb) {
+          cb(null, file.originalname);
+        }
+      });
+      
+      const upload = multer({ storage: storage });
 
 
 // ============================ GET Form ============================ //
 const get_form = async(req, res) => {
     try{
-        // res.sendFile(__dirname + '/../index.html');
         await res.sendFile(path.join(__dirname, '..', 'index.html'));
     }
     catch(err){
@@ -17,24 +33,42 @@ const get_form = async(req, res) => {
 const post_form = async(req, res) => {
 
     try{
+        await new Promise((resolve, reject) => {
+            upload.single("image")(req, res, (err) => {
+              if (err) {
+                console.log(err);
+                reject(err);
+              } else {
+                resolve();
+              }
+            });
+          });
+
         const name = req.body.name;
         const email = req.body.email;
         const phoneno = req.body.phoneno;
+
+        // console.log(req.file);
+
+        const buffer = fs.readFileSync(req.file.path);
+        const image = buffer.toString("base64");
+
+        const filetype = req.file.filetype;
         const msg = req.body.msg;
 
         const client = new Client({
             name: name,
             email: email,
             phoneno: phoneno,
+            image:image,
+            filetype:filetype,
             msg: msg,
         });
 
         await client.save();
         res.sendFile(path.join(__dirname, "..","public/html/success.html"));
-        // res.sendFile(__dirname + "/../public/html/success.html");
     }
     catch(err){
-        // res.sendFile(__dirname + "/../public/html/failure.html");
         res.sendFile(path.join(__dirname, "..","public/html/failure.html"));
         console.log(err);
     }
@@ -104,13 +138,32 @@ const update_form =  async(req, res) => {
 //======= Submit Update Form =======//
 const update_user =  async(req, res) => {
     try{
+        await new Promise((resolve, reject) => {
+            upload.single("image")(req, res, (err) => {
+              if (err) {
+                console.log(err);
+                reject(err);
+              } else {
+                resolve();
+              }
+            });
+          });
+
         const id = req.body.id;
         const name = req.body.name;
         const email = req.body.email;
         const phoneno = req.body.phoneno;
+
+        // console.log(req.file);
+
+        const buffer = fs.readFileSync(req.file.path);
+        const image = buffer.toString("base64");
+
+        const filetype = req.file.filetype;
+
         const msg = req.body.msg;
 
-        await Client.findByIdAndUpdate(id, {name:name, email:email, phoneno:phoneno, msg:msg});
+        await Client.findByIdAndUpdate(id, {name:name, email:email, phoneno:phoneno, image:image, filetype:filetype , msg:msg});
         res.redirect("/show");
     }
     catch(err){
@@ -119,4 +172,4 @@ const update_user =  async(req, res) => {
     
 };
 
-module.exports = {get_form, post_form, show_users, show_user_by_id, delete_user, update_form, update_user};
+module.exports = { get_form, post_form, show_users, show_user_by_id, delete_user, update_form, update_user};
