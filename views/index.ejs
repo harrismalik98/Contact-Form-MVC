@@ -5,6 +5,7 @@
       <td data-label="ID"><%= customer.id %></td>
       <input type="hidden" name="id" value="<%= customer.id %>">
 
+      <!-- Below line of img tag "src" decodes Base64 string to actual image -->
       <td data-label="Image"><img src="data:<%= customer.filetype %>;base64,<%=customer.image %>" /></td>
 
       <td data-label="Name"><%= customer.name %></td>

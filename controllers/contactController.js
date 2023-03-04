@@ -7,16 +7,24 @@ const Client = require("../models/contactModel");
 
 // ============================ For Storing Image File on Server ============================ //
 
-    const storage = multer.diskStorage({
-        destination: function(req, file, cb) {
-          cb(null, 'public/images/');
-        },
-        filename: function(req, file, cb) {
-          cb(null, file.originalname);
-        }
-      });
-      
-      const upload = multer({ storage: storage });
+// The diskStorage function of multer package allows to configure the destination
+// and filename of the uploaded files.
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'public/images/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.originalname);
+    }
+    });
+
+
+// The "upload" constant is created by calling the multer function and passing in an object with a storage 
+// property that refers to the storage configuration object that specifies where uploaded files should be 
+// stored on the server's file system and how they should be named.
+    
+const upload = multer({ storage: storage });
 
 
 // ============================ GET Form ============================ //
@@ -33,6 +41,8 @@ const get_form = async(req, res) => {
 const post_form = async(req, res) => {
 
     try{
+        // upload.single('image') is used to specify that only a single file with the field name "image" should be 
+        // expected in the form submission. The uploaded file can then be accessed via req.file.
         await new Promise((resolve, reject) => {
             upload.single("image")(req, res, (err) => {
               if (err) {
@@ -50,6 +60,8 @@ const post_form = async(req, res) => {
 
         // console.log(req.file);
 
+        // The fs.readFileSync() method is used to read the contents of the file at the given path synchronously
+        // so it will not goto next line untill it completely read all of the content.Then convert it into Base64 String.
         const buffer = fs.readFileSync(req.file.path);
         const image = buffer.toString("base64");
 
