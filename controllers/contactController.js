@@ -3,6 +3,9 @@ const multer = require("multer");
 const fs = require("fs");
 const Client = require("../models/contactModel");
 
+const {validationResult} = require("express-validator");
+const { validateContactForm } = require("../middleware/validation/contactValidation");
+
 
 
 // ============================ For Storing Image File on Server ============================ //
@@ -52,7 +55,19 @@ const post_form = async(req, res) => {
                 resolve();
               }
             });
-          });
+          }); 
+
+        // Below one is for Express Vlaidator validation rules.
+        // Promise.all() is used to handle an array of Promises
+        // The run() method returns a Promise that resolves with the validation result. 
+        // If any of the validation rules fail, the Promise returned by run() will be rejected with a validation error.
+        await Promise.all(validateContactForm.map((rule) => rule.run(req)));
+        
+        // Below one is for Express Vlaidator result that if error comes then response is json with errors.
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+        }
 
         const name = req.body.name;
         const email = req.body.email;
